@@ -1,0 +1,94 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
+
+version = VERSION_NAME
+group = GROUP
+project.archivesBaseName = PROJECT_NAME
+project.version = VERSION_NAME
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+android.libraryVariants.all { variant ->
+    def name = variant.buildType.name
+    if (!name.equals("debug")) {
+        def task = project.tasks.create "jar${name.capitalize()}", Jar
+        task.dependsOn variant.javaCompile
+        task.from variant.javaCompile.destinationDir
+        artifacts.add('archives', task);
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Google
+    implementation 'com.android.support:appcompat-v7:' + SUPPORT_LIB_VERSION
+    implementation 'com.android.support:palette-v7:' + SUPPORT_LIB_VERSION
+    implementation 'com.android.support:preference-v14:' + SUPPORT_LIB_VERSION
+    implementation 'com.android.support:design:' + SUPPORT_LIB_VERSION
+    implementation 'com.google.code.gson:gson:2.7'
+
+    //Architecture
+    implementation "android.arch.lifecycle:runtime:" + ARCHITECTURE_COMP_VERSION
+    implementation "android.arch.lifecycle:extensions:" + ARCHITECTURE_COMP_VERSION
+    annotationProcessor "android.arch.lifecycle:compiler:" + ARCHITECTURE_COMP_VERSION
+
+    //Square
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //ViewPagerIndicator
+    implementation ('com.viewpagerindicator:library:2.4.1@aar'){
+        transitive = true
+    }
+
+    //Tests
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+//JAR Generation
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = project.android.sourceSets.main.java.srcDirs
+    options.linkSource true
+    classpath += project.files(project.android.getBootClasspath().join(File.pathSeparator))
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    failOnError false
+}
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives file: project.file("/build/outputs/aar/utils-release.aar"), name: PROJECT_NAME, type: 'aar', classifier : "core"
+    archives file: project.file("../geo/build/outputs/aar/geo-release.aar"), name: 'geo', type: 'aar', classifier : "module"
+    archives generateJavadocsJar
+    archives generateSourcesJar
+}

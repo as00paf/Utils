@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">Utils</string>
+
+    <!-- General -->
+    <string name="loading">Loading…</string>
+    <string name="error">Error</string>
+    <string name="error_message">An error occurred, please try again later.</string>
+
+    <!-- On Boarding -->
+    <string name="welcome">Welcome to the mobile application\n %1$s</string>
+    <string name="on_board_gps">Do you accept to give permission to the app to access your GPS?</string>
+    <string name="on_board_storage">Do you accept to give permission to the app to access your local storage?</string>
+    <string name="accept">Accept</string>
+    <string name="accepted">Accepted</string>
+    <string name="denied">Denied</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="finish">Finish</string>
+
+    <!-- Permissions -->
+    <string name="location_permission_denied">Location Permission Denied</string>
+    <string name="location_permission_denied_msg">If you do not allow the application to have access to your location some features will not work as intented. Would you like to reconsider?</string>
+    <string name="storage_permission_denied">Storage Permission Denied</string>
+    <string name="storage_permission_denied_msg">If you do not allow the application to have access to your local storage some features will not work as intented. Would you like to reconsider?</string>
+    <string name="warning">Warning</string>
+    <string name="permission_warning">If you do not grant those permissions to the application, some features will not work as intented. Would you like to reconsider?</string>
+
+    <!-- Sharing -->
+    <string name="sent_from">Sent from %1$s</string>
+
+    <!-- Content Descriptions -->
+    <string name="image">Image</string>
+    <string name="thumb_image">Thumbmail Image</string>
+    <string name="cover_image">Cover Image</string>
+    <string name="tab">Tab</string>
+
+    <!-- Navigation Drawer -->
+    <string name="app_launcher">App Launcher</string>
+    <string name="cover_activity">Cover Activity</string>
+    <string name="tabbed_activity">Tabbed Activity</string>
+    <string name="notifications">Notifications</string>
+    <string name="log_out">Log Out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="refreshable_list">Refreshable List</string>
+    <string name="bottom_navigation">Bottom Navigation</string>
+    <string name="live_data">Live Data</string>
+    <string name="view_model">View Model</string>
+
+    <!-- Information -->
+    <string name="directions">Directions</string>
+
+    <!-- Sizes -->
+    <string name="bytes">bytes</string>
+    <string name="kilobytes">kb</string>
+    <string name="megabytes">mb</string>
+    <string name="gigabytes">gb</string>
+    <string name="terabytes">tb</string>
+</resources>

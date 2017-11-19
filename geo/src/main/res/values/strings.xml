@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Geo</string>
+
+    <!-- Messages -->
+    <string name="gps_disabled_message">Location services seem to be disabled, would you like to activate them?</string>
+
+    <!-- Geofence Messages -->
+    <string name="geofences_added">Geofences Added</string>
+    <string name="geofences_removed">Geofences Removed</string>
+    <string name="unknown_geofence_error">Unknown error: the Geofence service is not available now</string>
+    <string name="geofence_not_available">Geofence service is not available now</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences</string>
+    <string name="geofence_too_many_pending_intents">You have provided too many PendingIntents to the addGeofences() call</string>
+
+    <!-- Activity detection strings -->
+    <string name="in_vehicle">In a vehicle</string>
+    <string name="on_bicycle">On a bicycle</string>
+    <string name="on_foot">On foot</string>
+    <string name="running">Running</string>
+    <string name="still">Standing Still</string>
+    <string name="tilting">Tilting</string>
+    <string name="unknown">Unknown activity</string>
+    <string name="walking">Walking</string>
+    <string name="unidentifiable_activity">Unidentifiable activity: %1$d</string>
+    <string name="activity_updates_added">Activity updates added</string>
+    <string name="activity_updates_removed">Activity updates removed</string>
+    <string name="not_connected">GoogleApiClient not yet connected. Try again.</string>
+</resources>
