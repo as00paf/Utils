@@ -20,7 +20,7 @@ import java.util.List;
  * Abstract Fragment class used to display a RecyclerView inside a SwipeRefreshLayout
  * This Fragment also uses the new Android Architecture component LiveData to populate its views
  */
-public abstract class LiveDataRefreshableListFragment extends LifecycleFragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class LiveDataRefreshableListFragment<T> extends LifecycleFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "RefreshableListFrag";
 
     //Views
@@ -35,8 +35,8 @@ public abstract class LiveDataRefreshableListFragment extends LifecycleFragment 
     protected boolean refreshOnStart = false;
 
     //Data
-    protected LiveData<List> listDataListener;
-    protected List data;
+    protected LiveData<T> listDataListener;
+    protected T data;
 
     public abstract LiveDataRefreshableListFragment newInstance();
 
@@ -50,10 +50,10 @@ public abstract class LiveDataRefreshableListFragment extends LifecycleFragment 
         listDataListener.observe(this, dataObserver);
     }
 
-    protected Observer<List> dataObserver = new Observer<List>() {
+    protected Observer<T> dataObserver = new Observer<T>() {
         @Override
-        public void onChanged(@Nullable List list) {
-            data = list;
+        public void onChanged(@Nullable T data) {
+            LiveDataRefreshableListFragment.this.data = data;
             adapter = getAdapter();
             recyclerView.setAdapter(adapter);
         }
@@ -61,7 +61,7 @@ public abstract class LiveDataRefreshableListFragment extends LifecycleFragment 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_refreshable_list, container, false);
+        rootView = inflater.inflate(getLayoutResId(), container, false);
 
         //Recycler View
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list);
@@ -75,13 +75,20 @@ public abstract class LiveDataRefreshableListFragment extends LifecycleFragment 
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setRefreshing(refreshOnStart);
 
+        initViews();
         return rootView;
     }
 
+    protected int getLayoutResId() {
+        return R.layout.fragment_refreshable_list;
+    }
+
     //Abstract Methods
+    protected abstract void initViews();
+
     protected abstract RecyclerView.Adapter getAdapter();
 
-    protected abstract LiveData<List> getDataListener();
+    protected abstract LiveData<T> getDataListener();
 
     @Override
     public abstract void onRefresh();

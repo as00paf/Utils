@@ -1,4 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = GROUP
+project.archivesBaseName = "geo"
+project.version = VERSION_NAME
 
 android {
     compileSdkVersion 26
@@ -30,6 +36,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:' + SUPPORT_LIB_VERSION
     implementation 'com.google.android.gms:play-services-location:' + GMS_LIB_VERSION
     implementation 'com.google.android.gms:play-services-maps:' + GMS_LIB_VERSION
+    implementation 'com.google.code.gson:gson:2.7'
 
 
     testCompile 'junit:junit:4.12'
@@ -39,4 +46,31 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.0.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+}
+
+//JAR Generation
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavadocs(type: Javadoc) {
+    source = project.android.sourceSets.main.java.srcDirs
+    options.linkSource true
+    classpath += project.files(project.android.getBootClasspath().join(File.pathSeparator))
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    failOnError false
+}
+
+task generateJavadocsJar(type: Jar) {
+    from generateJavadocs.destinationDir
+    classifier 'javadoc'
+}
+
+generateJavadocsJar.dependsOn generateJavadocs
+
+artifacts {
+    archives file: project.file("/build/outputs/aar/geo-release.aar"), name: 'geo', type: 'aar'
+    archives generateJavadocsJar
+    archives generateSourcesJar
 }

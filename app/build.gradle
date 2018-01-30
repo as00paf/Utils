@@ -87,8 +87,8 @@ task generateJavadocsJar(type: Jar) {
 generateJavadocsJar.dependsOn generateJavadocs
 
 artifacts {
-    archives file: project.file("/build/outputs/aar/utils-release.aar"), name: PROJECT_NAME, type: 'aar', classifier : "core"
-    archives file: project.file("../geo/build/outputs/aar/geo-release.aar"), name: 'geo', type: 'aar', classifier : "module"
+    archives file: project.file("/build/outputs/aar/utils-release.aar"), name: PROJECT_NAME, type: 'aar'
+    //archives file: project.file("../geo/build/outputs/aar/geo-release.aar"), name: 'geo', type: 'aar', classifier: "geo"
     archives generateJavadocsJar
     archives generateSourcesJar
 }

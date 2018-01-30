@@ -148,6 +148,7 @@ public abstract class CollapsingCoverPagerActivity extends AppCompatActivity {
         tabs.requestFocus();
     }
 
+    //TODO : move to utils
     private void calculateMutedColors() {
         Palette palette = PaletteGeneratorTransform.getPalette(bitmap);
         if(DeviceUtils.isScreenLarge(getResources())) {
